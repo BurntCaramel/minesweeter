@@ -11,7 +11,18 @@
 }
 
 .tile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
   width: 2em;
   height: 2em;
+  font-weight: bold;
   border: 1px solid #ddd;
+}
+.tile.-covered {
+  background-color: #eee;
+  border-top: 3px solid white;
+  border-left: 3px solid white;
+  border-right: 3px solid #ccc;
+  border-bottom: 3px solid #ccc;
 }

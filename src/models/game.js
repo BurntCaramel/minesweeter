@@ -1,15 +1,39 @@
 import times from 'lodash/times'
 import { tileBombStates, tileUserStates } from './values'
+import { countProximities } from './calculations'
 
 export const initial = ({
   columns = 9,
   rows = 9,
   bombOdds = 0.1
-}) => ({
-  board: times(rows, () => (
+}) => {
+  const board = times(rows, () => (
     times(columns, () => ({
       bombState: Math.random() <= bombOdds ? tileBombStates.bomb : tileBombStates.blank,
-      userState: tileUserStates.none
+      userState: tileUserStates.covered
     }))
   ))
-})
+
+  const proximities = countProximities(board)
+
+  return {
+    board,
+    proximities
+  }
+}
+
+export const uncoverTile = (props, { rowIndex, colIndex }) => ({ board }) => {
+  console.log('uncoverTile', rowIndex, colIndex)
+  const tile = board[rowIndex][colIndex]
+  const newTile = (tile.bombState === tileBombStates.bomb) ? (
+    { ...tile, userState: tileUserStates.hitBomb }
+  ) : (
+    { ...tile, userState: tileUserStates.open }
+  )
+
+  board[rowIndex][colIndex] = newTile
+
+  const proximities = countProximities(board)
+
+  return { board, proximities }
+}

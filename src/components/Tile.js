@@ -3,15 +3,33 @@ import { tileBombStates, tileUserStates } from '../models/values'
 
 export default function Tile({
   bombState,
-  userState
+  userState,
+  proximityCount,
+  onUncover
 }) {
+  const className = [
+    'tile',
+    userState === tileUserStates.covered && '-covered',
+    userState === tileUserStates.flag && '-flag',
+    userState === tileUserStates.hitBomb && '-hitBomb',
+    userState === tileUserStates.open && '-open',
+  ].filter(Boolean).join(' ')
+
   return (
-    <div className='tile'>
+    <div className={ className } onClick={ onUncover }>
       {
-        (bombState === tileBombStates.blank) ? (
+        (userState === tileUserStates.covered) ? (
           ''
         ) : (
-          '💣'
+          (bombState === tileBombStates.blank) ? (
+            (proximityCount === 0) ? (
+              ''
+            ) : (
+              proximityCount
+            )
+          ) : (
+            '💣'
+          )
         )
       }
     </div>

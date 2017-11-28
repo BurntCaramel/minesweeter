@@ -4,7 +4,7 @@ export const tileBombStates = {
 }
 
 export const tileUserStates = {
-  none: 0,
+  covered: 0,
   flag: 1,
   open: 2,
   hitBomb: 3

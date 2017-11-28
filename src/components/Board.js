@@ -2,7 +2,9 @@ import React from 'react'
 import Tile from './Tile'
 
 export default function Board({
-  board
+  board,
+  proximities,
+  onUncoverTile
 }) {
   return (
     <div className='board'>
@@ -17,6 +19,8 @@ export default function Board({
             <Tile
               key={`r${rowIndex} c${colIndex}`}
               { ...tile }
+              proximityCount={ proximities[rowIndex][colIndex] }
+              onUncover={ () => onUncoverTile({ rowIndex, colIndex }) }
             />
           ))
         }
