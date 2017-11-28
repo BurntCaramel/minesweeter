@@ -5,14 +5,14 @@ import HeaderCounter from '../components/HeaderCounter'
 import * as gameModel from '../models/game'
 import { gameStates } from '../models/values'
 
-export default makeOrganism(({
+function Game({
   gameState,
   board,
   proximities,
   movesCount,
   handlers
-}) => (
-  <div>
+}) {
+  return <div>
     <header className='game-header mb-3'>
       <HeaderCounter count={ movesCount } />
       <button
@@ -50,4 +50,6 @@ export default makeOrganism(({
       onFlagTile={ handlers.flagTile }
     />
   </div>
-), gameModel)
+}
+
+export default makeOrganism(Game, gameModel)
