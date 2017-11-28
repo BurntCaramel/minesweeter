@@ -18,7 +18,7 @@ export default function Tile({
   ].filter(Boolean).join(' ')
 
   return (
-    <div
+    <button
       className={ className }
       onClick={ (event) => {
         onUncover()
@@ -46,6 +46,6 @@ export default function Tile({
           )
         )
       }
-    </div>
+    </button>
   )
 }
