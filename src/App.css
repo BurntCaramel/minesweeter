@@ -38,6 +38,7 @@
   font-weight: bold;
   border: 1px solid #ddd;
   background-color: rgb(249, 249, 249);
+  border-radius: 0;
 }
 .button.-raised,
 .tile.-covered,
@@ -67,4 +68,8 @@
 }
 .tile.-proximity-6 {
   color: darkcyan;
+}
+.tile.-hitBomb {
+  background-color: red;
+  border-color: red;
 }
