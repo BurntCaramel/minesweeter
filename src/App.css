@@ -7,6 +7,19 @@
   background-color: rgb(242, 242, 242);
 }
 
+.game-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.game-header_counter {
+  padding: 0 3px;
+  font-size: 24px;
+  color: red;
+  background: black;
+  font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, Courier, monospace;
+}
+
 .board {
   
 }

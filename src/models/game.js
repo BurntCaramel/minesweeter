@@ -21,7 +21,8 @@ const restart = ({
     columns,
     rows,
     board,
-    proximities
+    proximities,
+    movesCount: 0
   }
 }
 
@@ -56,7 +57,9 @@ const changeItemToUncovered = (item) => (
 
 const canExpandTile = (item, proximity) => (item.bombState === tileBombStates.blank && proximity === 0)
 
-export const uncoverTile = (props, { rowIndex, colIndex }) => ({ gameState, board, proximities, rows, columns }) => {
+export const uncoverTile = (props, { rowIndex, colIndex }) => ({
+  gameState, board, proximities, rows, columns, movesCount
+}) => {
   if (gameState !== gameStates.fresh && gameState !== gameStates.playing) {
     return
   }
@@ -95,7 +98,11 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({ gameState, boar
 
   uncoverInNewBoard(rowIndex, colIndex)
 
-  return { board: newBoard, gameState: gameOver ? gameStates.gameOver : gameStates.playing }
+  return {
+    board: newBoard,
+    gameState: gameOver ? gameStates.gameOver : gameStates.playing,
+    movesCount: movesCount + 1
+  }
 }
 
 export const flagTile = (props, { rowIndex, colIndex }) => ({ board }) => ({
