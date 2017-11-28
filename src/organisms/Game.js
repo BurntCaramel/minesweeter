@@ -12,5 +12,6 @@ export default makeOrganism(({
     board={ board }
     proximities={ proximities }
     onUncoverTile={ handlers.uncoverTile }
+    onFlagTile={ handlers.flagTile }
   />
 ), gameModel)

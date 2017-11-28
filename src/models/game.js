@@ -37,3 +37,19 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({ board }) => {
 
   return { board, proximities }
 }
+
+export const flagTile = (props, { rowIndex, colIndex }) => ({ board }) => {
+  console.log('flagTile', rowIndex, colIndex)
+
+  return {
+    board: board.map((row, currentRowIndex) => (
+      row.map((item, currentColIndex) => (
+        (rowIndex === currentRowIndex && colIndex === currentColIndex) ? (
+          { ...item, userState: tileUserStates.flag }
+        ) : (
+          item
+        )
+      ))
+    ))
+  }
+}
