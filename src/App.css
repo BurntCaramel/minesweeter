@@ -22,7 +22,8 @@
 }
 
 .board {
-  
+  -webkit-user-select: none;
+  user-select: none;
 }
 .board-row {
   display: flex;
