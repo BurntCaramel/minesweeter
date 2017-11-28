@@ -1,8 +1,9 @@
 export const gameStates = {
   fresh: 0,
-  playing: 1,
-  winner: 2,
-  gameOver: 3
+  restarting: 1,
+  playing: 2,
+  winner: 3,
+  gameOver: 4
 }
 
 export const tileBombStates = {

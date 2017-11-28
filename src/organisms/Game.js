@@ -13,12 +13,17 @@ export default makeOrganism(({
   <div>
     <button
       className='button -raised -start mb-3'
-      onClick={ handlers.restart }
+      onMouseDown={ handlers.beginRestart}
+      onClick={ handlers.completeRestart }
     >
       {
         (gameState === gameStates.gameOver) ? (
           <span role='img' aria-label='Game over: restart game'>
             😵
+          </span>
+        ) : (gameState === gameStates.restarting) ? (
+          <span role='img' aria-label='Restart game'>
+            😎
           </span>
         ) : (
           <span role='img' aria-label='Start game'>

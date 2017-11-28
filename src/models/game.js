@@ -2,7 +2,7 @@ import times from 'lodash/times'
 import { gameStates, tileBombStates, tileUserStates } from './values'
 import { countProximities, allDirections } from './calculations'
 
-export const restart = ({
+const restart = ({
   columns = 9,
   rows = 9,
   bombOdds = 0.1
@@ -26,6 +26,9 @@ export const restart = ({
 }
 
 export const initial = (props) => restart(props)
+
+export const beginRestart = () => ({ gameState: gameStates.restarting })
+export const completeRestart = restart
 
 const changeBoardItem = (board, rowIndex, colIndex, changeItem) => (
   board.map((row, currentRowIndex) => (
