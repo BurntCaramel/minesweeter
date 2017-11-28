@@ -100,7 +100,11 @@ export const flagTile = (props, { rowIndex, colIndex }) => ({ board }) => {
 
   return {
     board: changeBoardItem(board, rowIndex, colIndex, (item) => (
-      { ...item, userState: tileUserStates.flag }
+      (item.userState === tileUserStates.covered) ? (
+        { ...item, userState: tileUserStates.flag }
+      ) : (
+        item
+      )
     ))
   }
 }
