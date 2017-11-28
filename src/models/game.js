@@ -22,34 +22,38 @@ export const initial = ({
   }
 }
 
-export const uncoverTile = (props, { rowIndex, colIndex }) => ({ board }) => {
-  console.log('uncoverTile', rowIndex, colIndex)
-  const tile = board[rowIndex][colIndex]
-  const newTile = (tile.bombState === tileBombStates.bomb) ? (
-    { ...tile, userState: tileUserStates.hitBomb }
-  ) : (
-    { ...tile, userState: tileUserStates.open }
-  )
+const changeBoardItem = (board, rowIndex, colIndex, changeItem) => (
+  board.map((row, currentRowIndex) => (
+    row.map((item, currentColIndex) => (
+      (rowIndex === currentRowIndex && colIndex === currentColIndex) ? (
+        changeItem(item)
+      ) : (
+        item
+      )
+    ))
+  ))
+)
 
-  board[rowIndex][colIndex] = newTile
+export const uncoverTile = (props, { rowIndex, colIndex }) => ({ board, proximities }) => {
+  const newBoard = changeBoardItem(board, rowIndex, colIndex, (item) => (
+    (item.bombState === tileBombStates.bomb) ? (
+      { ...item, userState: tileUserStates.hitBomb }
+    ) : (
+      { ...item, userState: tileUserStates.open }
+    )
+  ))
 
-  const proximities = countProximities(board)
+  const newProximities = countProximities(newBoard)
 
-  return { board, proximities }
+  return { board: newBoard, proximities: newProximities }
 }
 
 export const flagTile = (props, { rowIndex, colIndex }) => ({ board }) => {
   console.log('flagTile', rowIndex, colIndex)
 
   return {
-    board: board.map((row, currentRowIndex) => (
-      row.map((item, currentColIndex) => (
-        (rowIndex === currentRowIndex && colIndex === currentColIndex) ? (
-          { ...item, userState: tileUserStates.flag }
-        ) : (
-          item
-        )
-      ))
+    board: changeBoardItem(board, rowIndex, colIndex, (item) => (
+      { ...item, userState: tileUserStates.flag }
     ))
   }
 }
