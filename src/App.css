@@ -54,7 +54,7 @@
   border-radius: 0;
 }
 .button.-raised,
-.tile.-covered,
+.tile.-covered:not(:active),
 .tile.-flag
 {
   background-color: #eee;
