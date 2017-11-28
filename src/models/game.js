@@ -29,6 +29,7 @@ const restart = ({
     board,
     proximities,
     bombsCount,
+    uncoveredCount: 0,
     movesCount: 0
   }
 }
@@ -66,7 +67,9 @@ const canPlayForGameState = (gameState) => (
   gameState === gameStates.fresh || gameState === gameStates.playing || gameStates.beginningMove
 )
 
-const canExpandTile = (item, proximity) => (item.bombState === tileBombStates.blank && proximity === 0)
+const canExpandTile = (item, proximity) => (
+  item.bombState === tileBombStates.blank && proximity === 0
+)
 
 export const beginUncoverTile = () => ({ gameState }) => {
   if (!canPlayForGameState(gameState)) {
@@ -77,7 +80,7 @@ export const beginUncoverTile = () => ({ gameState }) => {
 }
 
 export const uncoverTile = (props, { rowIndex, colIndex }) => ({
-  gameState, board, proximities, rows, columns, movesCount
+  gameState, board, proximities, rows, columns, bombsCount, uncoveredCount, movesCount
 }) => {
   if (!canPlayForGameState(gameState)) {
     return
@@ -85,25 +88,27 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({
 
   let gameOver = false
   let newBoard = copyBoard(board)
-  const coordsOpened = new Set()
 
   const uncoverInNewBoard = (rowIndex, colIndex) => {
+    if (gameOver) {
+      return
+    }
+
     const item = newBoard[rowIndex][colIndex]
     const proximity = proximities[rowIndex][colIndex]
-    const coordKey = `${rowIndex},${colIndex}`
-    // If already opened
-    if (coordsOpened.has(coordKey)) {
+    if (item.userState === tileUserStates.open) {
       return
     }
 
     const newItem = changeItemToUncovered(newBoard[rowIndex][colIndex])
-    gameOver = newItem.userState === tileUserStates.hitBomb
     newBoard[rowIndex][colIndex] = newItem
-    coordsOpened.add(coordKey)
 
+    gameOver = newItem.userState === tileUserStates.hitBomb
     if (gameOver) {
       return
     }
+
+    uncoveredCount += 1
 
     if (canExpandTile(item, proximity)) {
       allDirections.forEach((f) => {
@@ -119,7 +124,16 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({
 
   return {
     board: newBoard,
-    gameState: gameOver ? gameStates.gameOver : gameStates.playing,
+    gameState: gameOver ? (
+      gameStates.gameOver
+    ) : (
+      (uncoveredCount + bombsCount === columns * rows) ? (
+        gameStates.winner
+      ) : (
+        gameStates.playing
+      )
+    ),
+    uncoveredCount,
     movesCount: movesCount + 1
   }
 }
