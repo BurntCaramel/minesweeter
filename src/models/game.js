@@ -1,4 +1,5 @@
 import times from 'lodash/times'
+import shuffle from 'lodash/shuffle'
 import { gameStates, tileBombStates, tileUserStates, difficulties } from './values'
 import { countProximities, allDirections } from './calculations'
 
@@ -34,6 +35,7 @@ const restart = ({
     proximities,
     bombsCount,
     uncoveredCount: 0,
+    flagCount: 0,
     movesCount: 0
   }
 }
@@ -159,14 +161,22 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({
   }
 }
 
-export const flagTile = (props, { rowIndex, colIndex }) => ({ board }) => ({
-  board: changeBoardItem(board, rowIndex, colIndex, (item) => (
-    (item.userState === tileUserStates.covered) ? (
-      { ...item, userState: tileUserStates.flag }
-    ) : (item.userState === tileUserStates.flag) ? (
-      { ...item, userState: tileUserStates.covered }
-    ) : (
-      item
-    )
-  ))
-})
+export const flagTile = (props, { rowIndex, colIndex }) => ({ board, flagCount }) => {
+  const noticeChange = (input, changeBy) => {
+    flagCount += changeBy
+    return input
+  }
+
+  return {
+    board: changeBoardItem(board, rowIndex, colIndex, (item) => (
+      (item.userState === tileUserStates.covered) ? (
+        noticeChange({ ...item, userState: tileUserStates.flag }, +1)
+      ) : (item.userState === tileUserStates.flag) ? (
+        noticeChange({ ...item, userState: tileUserStates.covered }, -1)
+      ) : (
+        item
+      )
+    )),
+    flagCount
+  }
+}
