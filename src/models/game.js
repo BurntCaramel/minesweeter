@@ -98,16 +98,12 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({ gameState, boar
   return { board: newBoard, gameState: gameOver ? gameStates.gameOver : gameStates.playing }
 }
 
-export const flagTile = (props, { rowIndex, colIndex }) => ({ board }) => {
-  console.log('flagTile', rowIndex, colIndex)
-
-  return {
-    board: changeBoardItem(board, rowIndex, colIndex, (item) => (
-      (item.userState === tileUserStates.covered) ? (
-        { ...item, userState: tileUserStates.flag }
-      ) : (
-        item
-      )
-    ))
-  }
-}
+export const flagTile = (props, { rowIndex, colIndex }) => ({ board }) => ({
+  board: changeBoardItem(board, rowIndex, colIndex, (item) => (
+    (item.userState === tileUserStates.covered) ? (
+      { ...item, userState: tileUserStates.flag }
+    ) : (
+      item
+    )
+  ))
+})
