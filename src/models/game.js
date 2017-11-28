@@ -5,7 +5,7 @@ import { countProximities, allDirections } from './calculations'
 const restart = ({
   columns = 9,
   rows = 9,
-  bombOdds = 0.1
+  bombOdds = 0.12
 }) => {
   let bombsCount = 0
 
