@@ -86,6 +86,15 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({
     return
   }
 
+  // Don’t allow a game to start with a bomb
+  if (movesCount === 0) {
+    while (board[rowIndex][colIndex].bombState === tileBombStates.bomb) {
+      const newState = restart(props)
+      board = newState.board
+      proximities = newState.proximities
+    }
+  }
+
   let gameOver = false
   let newBoard = copyBoard(board)
 
@@ -124,6 +133,7 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({
 
   return {
     board: newBoard,
+    proximities,
     gameState: gameOver ? (
       gameStates.gameOver
     ) : (
