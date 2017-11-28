@@ -1,7 +1,8 @@
 .App {
+  display: flex;
+  flex-direction: column;
   min-height: 100vh;
   text-align: center;
-  display: flex;
   align-items: center;
   justify-content: center;
   background-color: rgb(242, 242, 242);
@@ -93,4 +94,8 @@
 }
 .tile.-flag {
   line-height: 1.2;
+}
+
+.links-nav {
+  margin-top: 3rem;
 }
