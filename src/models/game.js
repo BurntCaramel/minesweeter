@@ -1,6 +1,6 @@
 import times from 'lodash/times'
 import { tileBombStates, tileUserStates } from './values'
-import { countProximities } from './calculations'
+import { countProximities, allDirections } from './calculations'
 
 export const initial = ({
   columns = 9,
@@ -17,6 +17,8 @@ export const initial = ({
   const proximities = countProximities(board)
 
   return {
+    columns,
+    rows,
     board,
     proximities
   }
@@ -34,18 +36,49 @@ const changeBoardItem = (board, rowIndex, colIndex, changeItem) => (
   ))
 )
 
-export const uncoverTile = (props, { rowIndex, colIndex }) => ({ board, proximities }) => {
-  const newBoard = changeBoardItem(board, rowIndex, colIndex, (item) => (
-    (item.bombState === tileBombStates.bomb) ? (
-      { ...item, userState: tileUserStates.hitBomb }
-    ) : (
-      { ...item, userState: tileUserStates.open }
-    )
-  ))
+const copyBoard = (board) => (
+  board.map((row) => row.slice())
+)
 
-  const newProximities = countProximities(newBoard)
+const changeItemToUncovered = (item) => (
+  (item.bombState === tileBombStates.bomb) ? (
+    { ...item, userState: tileUserStates.hitBomb }
+  ) : (
+    { ...item, userState: tileUserStates.open }
+  )
+)
 
-  return { board: newBoard, proximities: newProximities }
+const canExpandTile = (item, proximity) => (item.bombState === tileBombStates.blank && proximity === 0)
+
+export const uncoverTile = (props, { rowIndex, colIndex }) => ({ board, proximities, rows, columns }) => {
+  let newBoard = copyBoard(board)
+  const coordsOpened = new Set()
+
+  const uncoverInNewBoard = (rowIndex, colIndex) => {
+    const item = newBoard[rowIndex][colIndex]
+    const proximity = proximities[rowIndex][colIndex]
+    const coordKey = `${rowIndex},${colIndex}`
+    // If already opened
+    if (coordsOpened.has(coordKey)) {
+      return
+    }
+
+    newBoard[rowIndex][colIndex] = changeItemToUncovered(newBoard[rowIndex][colIndex])
+    coordsOpened.add(coordKey)
+
+    if (canExpandTile(item, proximity)) {
+      allDirections.forEach((f) => {
+        const [r, c] = f(rowIndex, colIndex)
+        if (r < rows && r >= 0 && c < columns && c >= 0) {
+          uncoverInNewBoard(r, c)
+        }
+      })
+    }
+  }
+
+  uncoverInNewBoard(rowIndex, colIndex)
+
+  return { board: newBoard }
 }
 
 export const flagTile = (props, { rowIndex, colIndex }) => ({ board }) => {

@@ -10,7 +10,7 @@ const indexInDirection = {
   sw: (rowIndex, colIndex) => [rowIndex + 1, colIndex - 1],
   se: (rowIndex, colIndex) => [rowIndex + 1, colIndex + 1]
 }
-const allDirections = [
+export const allDirections = [
   indexInDirection.n,
   indexInDirection.s,
   indexInDirection.w,
