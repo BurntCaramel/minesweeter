@@ -98,4 +98,12 @@
 
 .links-nav {
   margin-top: 3rem;
+  font-size: 13px;
+}
+.links-nav a {
+  color: rgb(235, 8, 95);
+  text-decoration: none;
+}
+.links-nav a:hover {
+  text-decoration: underline;
 }
