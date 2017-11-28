@@ -41,7 +41,7 @@ const restart = ({
     proximities,
     bombsCount,
     uncoveredCount: 0,
-    flagCount: 0,
+    flagsCount: 0,
     movesCount: 0
   }
 }
@@ -167,9 +167,9 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({
   }
 }
 
-export const flagTile = (props, { rowIndex, colIndex }) => ({ board, flagCount }) => {
+export const flagTile = (props, { rowIndex, colIndex }) => ({ board, flagsCount }) => {
   const noticeChange = (input, changeBy) => {
-    flagCount += changeBy
+    flagsCount += changeBy
     return input
   }
 
@@ -183,6 +183,6 @@ export const flagTile = (props, { rowIndex, colIndex }) => ({ board, flagCount }
         item
       )
     )),
-    flagCount
+    flagsCount
   }
 }

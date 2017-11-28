@@ -9,12 +9,13 @@ function Game({
   gameState,
   board,
   proximities,
-  movesCount,
+  bombsCount,
+  flagsCount,
   handlers
 }) {
   return <div>
     <header className='game-header mb-3'>
-      <HeaderCounter count={ movesCount } />
+      <HeaderCounter count={ Math.max(bombsCount - flagsCount, 0) } />
       <button
         className='button -raised -start'
         onMouseDown={ handlers.beginRestart}
