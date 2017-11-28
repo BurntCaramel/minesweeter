@@ -8,7 +8,7 @@ export const initial = ({
 }) => ({
   board: times(rows, () => (
     times(columns, () => ({
-      bombState: tileBombStates.blank,
+      bombState: Math.random() <= bombOdds ? tileBombStates.bomb : tileBombStates.blank,
       userState: tileUserStates.none
     }))
   ))
