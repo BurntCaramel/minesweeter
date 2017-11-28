@@ -64,7 +64,7 @@ const changeItemToUncovered = (item) => (
 )
 
 const canPlayForGameState = (gameState) => (
-  gameState === gameStates.fresh || gameState === gameStates.playing || gameStates.beginningMove
+  gameState === gameStates.fresh || gameState === gameStates.playing || gameState === gameStates.beginningMove
 )
 
 const canExpandTile = (item, proximity) => (
