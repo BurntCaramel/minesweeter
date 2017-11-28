@@ -7,11 +7,17 @@ const restart = ({
   rows = 9,
   bombOdds = 0.1
 }) => {
+  let bombsCount = 0
+
   const board = times(rows, () => (
-    times(columns, () => ({
-      bombState: Math.random() <= bombOdds ? tileBombStates.bomb : tileBombStates.blank,
-      userState: tileUserStates.covered
-    }))
+    times(columns, () => {
+      const hasBomb = Math.random() <= bombOdds
+      bombsCount += (hasBomb ? 1 : 0)
+      return {
+        bombState: hasBomb ? tileBombStates.bomb : tileBombStates.blank,
+        userState: tileUserStates.covered
+      }
+    })
   ))
 
   const proximities = countProximities(board)
@@ -22,6 +28,7 @@ const restart = ({
     rows,
     board,
     proximities,
+    bombsCount,
     movesCount: 0
   }
 }
