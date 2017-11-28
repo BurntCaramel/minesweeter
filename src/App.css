@@ -14,15 +14,37 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2em;
-  height: 2em;
+  width: 1.5em;
+  height: 1.5em;
+  font-size: 20px;
   font-weight: bold;
   border: 1px solid #ddd;
+  background-color: rgb(249, 249, 249);
 }
-.tile.-covered {
+.tile.-covered,
+.tile.-flag
+{
   background-color: #eee;
   border-top: 3px solid white;
   border-left: 3px solid white;
   border-right: 3px solid #ccc;
   border-bottom: 3px solid #ccc;
+}
+.tile.-proximity-1 {
+  color: blue;
+}
+.tile.-proximity-2 {
+  color: green;
+}
+.tile.-proximity-3 {
+  color: red;
+}
+.tile.-proximity-4 {
+  color: darkblue;
+}
+.tile.-proximity-5 {
+  color: darkred;
+}
+.tile.-proximity-6 {
+  color: darkcyan;
 }

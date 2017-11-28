@@ -14,6 +14,7 @@ export default function Tile({
     userState === tileUserStates.flag && '-flag',
     userState === tileUserStates.hitBomb && '-hitBomb',
     userState === tileUserStates.open && '-open',
+    userState === tileUserStates.open && `-proximity-${proximityCount}`
   ].filter(Boolean).join(' ')
 
   return (
