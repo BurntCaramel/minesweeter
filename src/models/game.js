@@ -1,8 +1,8 @@
 import times from 'lodash/times'
-import { tileBombStates, tileUserStates } from './values'
+import { gameStates, tileBombStates, tileUserStates } from './values'
 import { countProximities, allDirections } from './calculations'
 
-export const initial = ({
+export const restart = ({
   columns = 9,
   rows = 9,
   bombOdds = 0.1
@@ -17,12 +17,15 @@ export const initial = ({
   const proximities = countProximities(board)
 
   return {
+    gameState: gameStates.fresh,
     columns,
     rows,
     board,
     proximities
   }
 }
+
+export const initial = (props) => restart(props)
 
 const changeBoardItem = (board, rowIndex, colIndex, changeItem) => (
   board.map((row, currentRowIndex) => (
@@ -50,7 +53,12 @@ const changeItemToUncovered = (item) => (
 
 const canExpandTile = (item, proximity) => (item.bombState === tileBombStates.blank && proximity === 0)
 
-export const uncoverTile = (props, { rowIndex, colIndex }) => ({ board, proximities, rows, columns }) => {
+export const uncoverTile = (props, { rowIndex, colIndex }) => ({ gameState, board, proximities, rows, columns }) => {
+  if (gameState !== gameStates.fresh && gameState !== gameStates.playing) {
+    return
+  }
+
+  let gameOver = false
   let newBoard = copyBoard(board)
   const coordsOpened = new Set()
 
@@ -63,8 +71,14 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({ board, proximit
       return
     }
 
-    newBoard[rowIndex][colIndex] = changeItemToUncovered(newBoard[rowIndex][colIndex])
+    const newItem = changeItemToUncovered(newBoard[rowIndex][colIndex])
+    gameOver = newItem.userState === tileUserStates.hitBomb
+    newBoard[rowIndex][colIndex] = newItem
     coordsOpened.add(coordKey)
+
+    if (gameOver) {
+      return
+    }
 
     if (canExpandTile(item, proximity)) {
       allDirections.forEach((f) => {
@@ -78,7 +92,7 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({ board, proximit
 
   uncoverInNewBoard(rowIndex, colIndex)
 
-  return { board: newBoard }
+  return { board: newBoard, gameState: gameOver ? gameStates.gameOver : gameStates.playing }
 }
 
 export const flagTile = (props, { rowIndex, colIndex }) => ({ board }) => {
