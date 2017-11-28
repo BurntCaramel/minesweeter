@@ -1,12 +1,16 @@
 import times from 'lodash/times'
-import { gameStates, tileBombStates, tileUserStates } from './values'
+import { gameStates, tileBombStates, tileUserStates, difficulties } from './values'
 import { countProximities, allDirections } from './calculations'
 
 const restart = ({
-  columns = 9,
-  rows = 9,
-  bombOdds = 0.12
+  difficultyID
 }) => {
+  const settings = difficulties[difficultyID]
+  if (!settings) {
+    throw `Unknown difficulty '${difficultyID}'`
+  }
+  const { columns, rows, bombOdds } = settings
+
   let bombsCount = 0
 
   const board = times(rows, () => (
