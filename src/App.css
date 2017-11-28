@@ -96,6 +96,10 @@
   line-height: 1.2;
 }
 
+.game-settings {
+  margin-top: 1rem;
+}
+
 .links-nav {
   margin-top: 3rem;
   font-size: 13px;

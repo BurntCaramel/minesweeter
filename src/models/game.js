@@ -40,6 +40,13 @@ const restart = ({
 
 export const initial = (props) => restart(props)
 
+export const load = (next, prev) => {
+  // Restart when difficulty changes
+  if (!!prev && prev.difficultyID !== next.difficultyID) {
+    return restart(next)
+  }
+}
+
 export const beginRestart = () => ({ gameState: gameStates.restarting })
 export const completeRestart = restart
 
