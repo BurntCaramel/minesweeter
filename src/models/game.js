@@ -12,12 +12,18 @@ const restart = ({
   }
   const { columns, rows, bombOdds } = settings
 
-  let bombsCount = 0
+  const tilesCount = columns * rows
+  let bombsCount = Math.round(bombOdds * tilesCount)
 
-  const board = times(rows, () => (
-    times(columns, () => {
-      const hasBomb = Math.random() <= bombOdds
-      bombsCount += (hasBomb ? 1 : 0)
+  const shuffledBombs = shuffle(
+    times(bombsCount, () => true).concat(times(tilesCount - bombsCount, () => false))
+  )
+
+  const board = times(rows, (rowIndex) => (
+    times(columns, (columnIndex) => {
+      // const hasBomb = Math.random() <= bombOdds
+      // bombsCount += (hasBomb ? 1 : 0)
+      const hasBomb = shuffledBombs[rowIndex * rows + columnIndex]
       return {
         bombState: hasBomb ? tileBombStates.bomb : tileBombStates.blank,
         userState: tileUserStates.covered
