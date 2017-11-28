@@ -25,9 +25,13 @@ export default makeOrganism(({
             <span role='img' aria-label='Game over: restart game'>
               😵
             </span>
-          ) : (gameState === gameStates.restarting) ? (
+          ) : (gameState === gameStates.winner) ? (
             <span role='img' aria-label='Restart game'>
               😎
+            </span>
+          ) : (gameState === gameStates.beginningMove) ? (
+            <span role='img' aria-label='Restart game'>
+              😮
             </span>
           ) : (
             <span role='img' aria-label='Start game'>
@@ -41,6 +45,7 @@ export default makeOrganism(({
     <Board
       board={ board }
       proximities={ proximities }
+      onBeginUncoverTile={ handlers.beginUncoverTile }
       onUncoverTile={ handlers.uncoverTile }
       onFlagTile={ handlers.flagTile }
     />

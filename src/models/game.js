@@ -55,12 +55,24 @@ const changeItemToUncovered = (item) => (
   )
 )
 
+const canPlayForGameState = (gameState) => (
+  gameState === gameStates.fresh || gameState === gameStates.playing || gameStates.beginningMove
+)
+
 const canExpandTile = (item, proximity) => (item.bombState === tileBombStates.blank && proximity === 0)
+
+export const beginUncoverTile = () => ({ gameState }) => {
+  if (!canPlayForGameState(gameState)) {
+    return
+  }
+
+  return { gameState: gameStates.beginningMove }
+}
 
 export const uncoverTile = (props, { rowIndex, colIndex }) => ({
   gameState, board, proximities, rows, columns, movesCount
 }) => {
-  if (gameState !== gameStates.fresh && gameState !== gameStates.playing) {
+  if (!canPlayForGameState(gameState)) {
     return
   }
 

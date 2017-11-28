@@ -4,6 +4,7 @@ import Tile from './Tile'
 export default function Board({
   board,
   proximities,
+  onBeginUncoverTile,
   onUncoverTile,
   onFlagTile
 }) {
@@ -21,6 +22,7 @@ export default function Board({
               key={`r${rowIndex} c${colIndex}`}
               { ...tile }
               proximityCount={ proximities[rowIndex][colIndex] }
+              onBeginUncover={ () => onBeginUncoverTile({ rowIndex, colIndex }) }
               onUncover={ () => onUncoverTile({ rowIndex, colIndex }) }
               onFlag={ () => onFlagTile({ rowIndex, colIndex }) }
             />

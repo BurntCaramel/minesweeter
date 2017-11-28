@@ -5,6 +5,7 @@ export default function Tile({
   bombState,
   userState,
   proximityCount,
+  onBeginUncover,
   onUncover,
   onFlag
 }) {
@@ -20,6 +21,11 @@ export default function Tile({
   return (
     <button
       className={ className }
+      onMouseDown={ (event) => {
+        if (event.button === 0) {
+          onBeginUncover()
+        }
+      } }
       onClick={ (event) => {
         onUncover()
       } }
