@@ -18,3 +18,21 @@ export const tileUserStates = {
   open: 2,
   hitBomb: 3
 }
+
+export const difficulties = {
+  easy: {
+    columns: 8,
+    rows: 8,
+    bombOdds: 10/(8*8)
+  },
+  intermediate: {
+    columns: 16,
+    rows: 16,
+    bombOdds: 40/(16*16)
+  },
+  expert: {
+    columns: 30,
+    rows: 16,
+    bombOdds: 99/(30*16)
+  }
+}
