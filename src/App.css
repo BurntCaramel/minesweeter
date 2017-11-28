@@ -49,6 +49,7 @@
   height: 1.5em;
   font-size: 20px;
   font-weight: bold;
+  padding: 2px;
   border: 1px solid #ddd;
   background-color: rgb(249, 249, 249);
   border-radius: 0;
@@ -58,6 +59,7 @@
 .tile.-flag
 {
   background-color: #eee;
+  padding: 0;
   border-top: 3px solid white;
   border-left: 3px solid white;
   border-right: 3px solid #ccc;
@@ -84,6 +86,9 @@
 }
 .tile.-proximity-6 {
   color: darkcyan;
+}
+.tile.-bomb {
+  line-height: 1.3;
 }
 .tile.-hitBomb {
   background-color: red;

@@ -5,6 +5,7 @@ export default function Tile({
   bombState,
   userState,
   proximityCount,
+  showBombs,
   onBeginUncover,
   onUncover,
   onFlag
@@ -13,8 +14,9 @@ export default function Tile({
     'tile',
     userState === tileUserStates.covered && '-covered',
     userState === tileUserStates.flag && '-flag',
-    userState === tileUserStates.hitBomb && '-hitBomb',
+    userState === tileUserStates.hitBomb && '-bomb -hitBomb',
     userState === tileUserStates.open && '-open',
+    (showBombs && bombState === tileBombStates.bomb) && '-bomb',
     userState === tileUserStates.open && `-proximity-${proximityCount}`
   ].filter(Boolean).join(' ')
 
@@ -36,11 +38,13 @@ export default function Tile({
       } }
     >
       {
-        (userState === tileUserStates.covered) ? (
-          ''
-        ) : (userState === tileUserStates.flag) ? (
+        (userState === tileUserStates.flag) ? (
           '🚩'
-        ) : (
+        ) : (showBombs && bombState === tileBombStates.bomb) ? (
+          '💣'
+        ) : (userState === tileUserStates.covered) ? (
+          ''
+        ) :  (
           (bombState === tileBombStates.blank) ? (
             (proximityCount === 0) ? (
               ''

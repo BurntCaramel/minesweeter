@@ -43,6 +43,7 @@ function Game({
       <HeaderCounter count={ 999 } />
     </header>
     <Board
+      gameState={ gameState }
       board={ board }
       proximities={ proximities }
       onBeginUncoverTile={ handlers.beginUncoverTile }
