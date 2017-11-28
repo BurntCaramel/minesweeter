@@ -64,6 +64,9 @@
   border-bottom: 3px solid #ccc;
   border-radius: 0;
 }
+.tile.-flag {
+  line-height: 1.2;
+}
 .tile.-proximity-1 {
   color: blue;
 }
