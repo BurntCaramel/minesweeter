@@ -8,7 +8,7 @@ const restart = ({
 }) => {
   const settings = difficulties[difficultyID]
   if (!settings) {
-    throw `Unknown difficulty '${difficultyID}'`
+    throw new Error(`Unknown difficulty '${difficultyID}'`)
   }
   const { columns, rows, bombOdds } = settings
 
