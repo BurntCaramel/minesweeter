@@ -99,7 +99,7 @@ export const beginUncoverTile = () => ({ gameState }) => {
 }
 
 export const uncoverTile = (props, { rowIndex, colIndex }) => ({
-  gameState, board, proximities, rows, columns, bombsCount, uncoveredCount, movesCount
+  gameState, board, proximities, rows, columns, bombsCount, uncoveredCount, flagsCount, movesCount
 }) => {
   if (!canPlayForGameState(gameState)) {
     return
@@ -122,13 +122,13 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({
       return
     }
 
-    const item = newBoard[rowIndex][colIndex]
+    const prevItem = newBoard[rowIndex][colIndex]
     const proximity = proximities[rowIndex][colIndex]
-    if (item.userState === tileUserStates.open) {
+    if (prevItem.userState === tileUserStates.open) {
       return
     }
 
-    const newItem = changeItemToUncovered(newBoard[rowIndex][colIndex])
+    const newItem = changeItemToUncovered(prevItem)
     newBoard[rowIndex][colIndex] = newItem
 
     gameOver = newItem.userState === tileUserStates.hitBomb
@@ -138,7 +138,11 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({
 
     uncoveredCount += 1
 
-    if (canExpandTile(item, proximity)) {
+    if (prevItem.userState === tileUserStates.flag) {
+      flagsCount -= 1
+    }
+
+    if (canExpandTile(newItem, proximity)) {
       allDirections.forEach((f) => {
         const [r, c] = f(rowIndex, colIndex)
         if (r < rows && r >= 0 && c < columns && c >= 0) {
@@ -163,6 +167,7 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({
       )
     ),
     uncoveredCount,
+    flagsCount,
     movesCount: movesCount + 1
   }
 }
