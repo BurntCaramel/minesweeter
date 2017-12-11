@@ -15,6 +15,7 @@ class App extends Component {
 
   onChangeDifficultyID = ({ target: { value } }) => {
     this.setState({ difficultyID: value })
+    window.history.pushState(null, '', `/${value}`)
   }
 
   render() {
