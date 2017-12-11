@@ -2,10 +2,16 @@ import React, { Component } from 'react';
 import './App.css';
 import Game from './organisms/Game'
 
-class App extends Component {
-  state = {
-    difficultyID: 'intermediate'
+function stateForPath(path) {
+  const regex = /^\/(easy|intermediate|expert)\/?$/
+  const [/* skip */, difficultyID = 'intermediate'] = regex.exec(path) || []
+  return {
+    difficultyID
   }
+}
+
+class App extends Component {
+  state = stateForPath(window.location.pathname)
 
   onChangeDifficultyID = ({ target: { value } }) => {
     this.setState({ difficultyID: value })
