@@ -2,6 +2,9 @@
 
 Minesweeper clone written in React.
 
+- Uses [react-organism](https://github.com/RoyalIcing/react-organism) for state
+- [See the main game logic here](https://github.com/RoyalIcing/minesweeter/blob/master/src/models/game.js)
+
 ## Resources
 
 - https://dzone.com/articles/minesweeper-algorithms-explained
@@ -9,6 +12,7 @@ Minesweeper clone written in React.
 - https://math.stackexchange.com/questions/42494/odds-of-winning-at-minesweeper-with-perfect-play
 - http://www.instructables.com/id/How-to-beat-Minesweeper/
 
+---
 
 This project was bootstrapped with [Create React App](https://github.com/facebookincubator/create-react-app).
 
