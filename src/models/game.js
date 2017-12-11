@@ -4,9 +4,13 @@ import { gameStates, tileBombStates, tileUserStates, difficulties } from './valu
 import { countProximities, allDirections } from './calculations'
 
 const restart = ({
-  difficultyID
+  difficultyID,
+  settings
 }) => {
-  const settings = difficulties[difficultyID]
+  if (!settings) {
+    settings = difficulties[difficultyID]
+  }
+
   if (!settings) {
     throw new Error(`Unknown difficulty '${difficultyID}'`)
   }
@@ -49,10 +53,29 @@ const restart = ({
 
 export const initial = (props) => restart(props)
 
-export const load = (next, prev) => {
+export function *load(next, prev) {
   // Restart when difficulty changes
   if (!!prev && prev.difficultyID !== next.difficultyID) {
-    return restart(next)
+    // Read settings for previous and next difficulties
+    let prevSettings = difficulties[prev.difficultyID]
+    let nextSettings = difficulties[next.difficultyID]
+
+    let columnsForFraction = (f) => prevSettings.columns + Math.round((nextSettings.columns - prevSettings.columns) * f)
+    let rowsForFraction = (f) => prevSettings.rows + Math.round((nextSettings.rows - prevSettings.rows) * f)
+
+    const totalFrames = 12
+    // Tween between settings
+    for (let frame = 0; frame < totalFrames; frame += 1) {
+      yield restart({
+        settings: {
+          ...nextSettings,
+          columns: columnsForFraction(frame / totalFrames),
+          rows: rowsForFraction(frame / totalFrames),
+        }
+      })
+    }
+
+    yield restart(next)
   }
 }
 
