@@ -42,7 +42,8 @@ const restart = ({
     bombsCount,
     uncoveredCount: 0,
     flagsCount: 0,
-    movesCount: 0
+    movesCount: 0,
+    startedAt: null
   }
 }
 
@@ -90,12 +91,19 @@ const canExpandTile = (item, proximity) => (
   item.bombState === tileBombStates.blank && proximity === 0
 )
 
-export const beginUncoverTile = () => ({ gameState }) => {
+export const beginUncoverTile = () => ({ gameState, startedAt }) => {
   if (!canPlayForGameState(gameState)) {
     return
   }
 
-  return { gameState: gameStates.beginningMove }
+  if (gameState === gameStates.fresh) {
+    startedAt = Date.now()
+  }
+
+  return {
+    gameState: gameStates.beginningMove,
+    startedAt
+  }
 }
 
 export const uncoverTile = (props, { rowIndex, colIndex }) => ({
@@ -154,21 +162,24 @@ export const uncoverTile = (props, { rowIndex, colIndex }) => ({
 
   uncoverInNewBoard(rowIndex, colIndex)
 
+  const won = uncoveredCount + bombsCount === columns * rows
+
+  const newGameState = gameOver ? (
+    gameStates.gameOver
+  ) : won ? (
+    gameStates.winner
+  ) : (
+    gameStates.playing
+  )
+
   return {
     board: newBoard,
     proximities,
-    gameState: gameOver ? (
-      gameStates.gameOver
-    ) : (
-      (uncoveredCount + bombsCount === columns * rows) ? (
-        gameStates.winner
-      ) : (
-        gameStates.playing
-      )
-    ),
+    gameState: newGameState,
     uncoveredCount,
     flagsCount,
-    movesCount: movesCount + 1
+    movesCount: movesCount + 1,
+    finishedAt: gameOver || won ? Date.now() : null
   }
 }
 

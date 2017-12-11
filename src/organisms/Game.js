@@ -2,6 +2,7 @@ import React from 'react'
 import makeOrganism from 'react-organism'
 import Board from '../components/Board'
 import HeaderCounter from '../components/HeaderCounter'
+import Timer from '../components/Timer'
 import * as gameModel from '../models/game'
 import { gameStates } from '../models/values'
 
@@ -11,6 +12,8 @@ function Game({
   proximities,
   bombsCount,
   flagsCount,
+  startedAt,
+  finishedAt,
   handlers
 }) {
   return <div>
@@ -41,7 +44,10 @@ function Game({
           )
         }
       </button>
-      <HeaderCounter count={ 999 } />
+      <Timer
+        startedAt={ startedAt }
+        finishedAt={ finishedAt  }
+      />
     </header>
     <Board
       gameState={ gameState }
