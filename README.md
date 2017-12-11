@@ -1,4 +1,4 @@
-# Shinesweeter
+# Minesweeter
 
 Minesweeper clone written in React.
 
