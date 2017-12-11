@@ -31,6 +31,7 @@
 }
 
 .button {
+  padding: 2px;
   border: 1px solid #ddd;
   background-color: rgb(249, 249, 249);
 }
@@ -56,7 +57,7 @@
   background-color: rgb(249, 249, 249);
   border-radius: 0;
 }
-.button.-raised,
+.button.-raised:not(:active),
 .tile.-covered:not(:active),
 .tile.-flag
 {
