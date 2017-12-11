@@ -33,6 +33,7 @@ class App extends Component {
         </aside>
         <nav className='links-nav'>
           <a href='https://github.com/RoyalIcing/minesweeter'>Fork on GitHub</a>
+          <a href='https://github.com/RoyalIcing/react-organism'>Made using react-organism</a>
         </nav>
       </div>
     );

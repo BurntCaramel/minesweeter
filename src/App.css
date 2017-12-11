@@ -103,10 +103,14 @@
 }
 
 .links-nav {
-  margin-top: 3rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 2rem;
   font-size: 13px;
 }
 .links-nav a {
+  margin-bottom: 0.5rem;
   color: rgb(70, 70, 70);
   text-decoration: none;
   border-bottom: 1px dotted currentColor;
