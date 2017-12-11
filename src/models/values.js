@@ -1,10 +1,10 @@
 export const gameStates = {
-  fresh: 0,
-  restarting: 1,
-  playing: 2,
-  beginningMove: 3,
-  winner: 20,
-  gameOver: 30
+  fresh: 0, // Has not made a move yet
+  restarting: 1, // About to restart
+  playing: 2, // Has made first move
+  beginningMove: 3, // About to make a move
+  winner: 20, // Won the game
+  gameOver: 30 // Lost the game
 }
 
 export const tileBombStates = {
